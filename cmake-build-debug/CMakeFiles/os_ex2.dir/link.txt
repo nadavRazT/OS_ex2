@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/os_ex2.dir/main.cpp.o  -o os_ex2 
