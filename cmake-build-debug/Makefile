@@ -143,33 +143,6 @@ os_ex2/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/build
 .PHONY : os_ex2/fast
 
-demo_jmp.o: demo_jmp.c.o
-
-.PHONY : demo_jmp.o
-
-# target to build an object file
-demo_jmp.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/demo_jmp.c.o
-.PHONY : demo_jmp.c.o
-
-demo_jmp.i: demo_jmp.c.i
-
-.PHONY : demo_jmp.i
-
-# target to preprocess a source file
-demo_jmp.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/demo_jmp.c.i
-.PHONY : demo_jmp.c.i
-
-demo_jmp.s: demo_jmp.c.s
-
-.PHONY : demo_jmp.s
-
-# target to generate assembly for a file
-demo_jmp.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/demo_jmp.c.s
-.PHONY : demo_jmp.c.s
-
 thread.o: thread.cpp.o
 
 .PHONY : thread.o
@@ -197,6 +170,33 @@ thread.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/thread.cpp.s
 .PHONY : thread.cpp.s
 
+uthreads.o: uthreads.cpp.o
+
+.PHONY : uthreads.o
+
+# target to build an object file
+uthreads.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/uthreads.cpp.o
+.PHONY : uthreads.cpp.o
+
+uthreads.i: uthreads.cpp.i
+
+.PHONY : uthreads.i
+
+# target to preprocess a source file
+uthreads.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/uthreads.cpp.i
+.PHONY : uthreads.cpp.i
+
+uthreads.s: uthreads.cpp.s
+
+.PHONY : uthreads.s
+
+# target to generate assembly for a file
+uthreads.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/uthreads.cpp.s
+.PHONY : uthreads.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -206,12 +206,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... os_ex2"
-	@echo "... demo_jmp.o"
-	@echo "... demo_jmp.i"
-	@echo "... demo_jmp.s"
 	@echo "... thread.o"
 	@echo "... thread.i"
 	@echo "... thread.s"
+	@echo "... uthreads.o"
+	@echo "... uthreads.i"
+	@echo "... uthreads.s"
 .PHONY : help
 
 

@@ -30,10 +30,10 @@ class thread {
 private:
     int id;
 
-    void (*f)(void);
 
     bool mutex;
     int state;
+    int num_quantum = 0;
     sigjmp_buf env;
     char *stack = new char[STACK_SIZE];
 
@@ -49,17 +49,35 @@ private:
     }
 
 public:
+    void (*f)(void);
+
+    __jmp_buf_tag *get_env();
+
+
+    int get_id();
+
+    void terminate();
+
+    void increment_num_quantum() {
+        this->num_quantum += 1;
+    }
+
+    int get_num_quantum()
+    {
+        return this->num_quantum;
+    }
 
     thread(void (*f)(void), int id) {
         this->f = f;
         this->id = id;
+        setup_env();
     }
 
-    __jmp_buf_tag *get_env();
+    thread() {
+        this->f = nullptr;
+        this->id = -1;
 
-    void switch_threads(thread cur_thread);
-
-    int get_id();
+    }
 
 };
 
@@ -67,12 +85,12 @@ __jmp_buf_tag *thread::get_env() {
     return env;
 }
 
-void thread::switch_threads(thread cur_thread) {
-    int ret_val = sigsetjmp(cur_thread.get_env(), 1); //todo check ret_val if relevant
-    siglongjmp(env, 1);
-}
 
 int thread::get_id() {
     return id;
+}
+
+void thread::terminate() {
+    delete stack;
 }
 

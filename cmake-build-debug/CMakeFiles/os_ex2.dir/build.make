@@ -77,18 +77,18 @@ include CMakeFiles/os_ex2.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/os_ex2.dir/flags.make
 
-CMakeFiles/os_ex2.dir/demo_jmp.c.o: CMakeFiles/os_ex2.dir/flags.make
-CMakeFiles/os_ex2.dir/demo_jmp.c.o: ../demo_jmp.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/os_ex2.dir/demo_jmp.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/os_ex2.dir/demo_jmp.c.o   -c /home/nadav/CLionProjects/os_ex2/demo_jmp.c
+CMakeFiles/os_ex2.dir/uthreads.cpp.o: CMakeFiles/os_ex2.dir/flags.make
+CMakeFiles/os_ex2.dir/uthreads.cpp.o: ../uthreads.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/os_ex2.dir/uthreads.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/os_ex2.dir/uthreads.cpp.o -c /home/nadav/CLionProjects/os_ex2/uthreads.cpp
 
-CMakeFiles/os_ex2.dir/demo_jmp.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/os_ex2.dir/demo_jmp.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/nadav/CLionProjects/os_ex2/demo_jmp.c > CMakeFiles/os_ex2.dir/demo_jmp.c.i
+CMakeFiles/os_ex2.dir/uthreads.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/os_ex2.dir/uthreads.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nadav/CLionProjects/os_ex2/uthreads.cpp > CMakeFiles/os_ex2.dir/uthreads.cpp.i
 
-CMakeFiles/os_ex2.dir/demo_jmp.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/os_ex2.dir/demo_jmp.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/nadav/CLionProjects/os_ex2/demo_jmp.c -o CMakeFiles/os_ex2.dir/demo_jmp.c.s
+CMakeFiles/os_ex2.dir/uthreads.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/os_ex2.dir/uthreads.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nadav/CLionProjects/os_ex2/uthreads.cpp -o CMakeFiles/os_ex2.dir/uthreads.cpp.s
 
 CMakeFiles/os_ex2.dir/thread.cpp.o: CMakeFiles/os_ex2.dir/flags.make
 CMakeFiles/os_ex2.dir/thread.cpp.o: ../thread.cpp
@@ -105,13 +105,13 @@ CMakeFiles/os_ex2.dir/thread.cpp.s: cmake_force
 
 # Object files for target os_ex2
 os_ex2_OBJECTS = \
-"CMakeFiles/os_ex2.dir/demo_jmp.c.o" \
+"CMakeFiles/os_ex2.dir/uthreads.cpp.o" \
 "CMakeFiles/os_ex2.dir/thread.cpp.o"
 
 # External object files for target os_ex2
 os_ex2_EXTERNAL_OBJECTS =
 
-os_ex2: CMakeFiles/os_ex2.dir/demo_jmp.c.o
+os_ex2: CMakeFiles/os_ex2.dir/uthreads.cpp.o
 os_ex2: CMakeFiles/os_ex2.dir/thread.cpp.o
 os_ex2: CMakeFiles/os_ex2.dir/build.make
 os_ex2: CMakeFiles/os_ex2.dir/link.txt
