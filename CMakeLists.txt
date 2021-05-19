@@ -3,4 +3,4 @@ project(os_ex2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(os_ex2 main.cpp)
+add_executable(os_ex2 demo_jmp.c uthreads.h thread.cpp thread.h)

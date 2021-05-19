@@ -143,32 +143,59 @@ os_ex2/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/build
 .PHONY : os_ex2/fast
 
-main.o: main.cpp.o
+demo_jmp.o: demo_jmp.c.o
 
-.PHONY : main.o
+.PHONY : demo_jmp.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/main.cpp.o
-.PHONY : main.cpp.o
+demo_jmp.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/demo_jmp.c.o
+.PHONY : demo_jmp.c.o
 
-main.i: main.cpp.i
+demo_jmp.i: demo_jmp.c.i
 
-.PHONY : main.i
+.PHONY : demo_jmp.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/main.cpp.i
-.PHONY : main.cpp.i
+demo_jmp.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/demo_jmp.c.i
+.PHONY : demo_jmp.c.i
 
-main.s: main.cpp.s
+demo_jmp.s: demo_jmp.c.s
 
-.PHONY : main.s
+.PHONY : demo_jmp.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/main.cpp.s
-.PHONY : main.cpp.s
+demo_jmp.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/demo_jmp.c.s
+.PHONY : demo_jmp.c.s
+
+thread.o: thread.cpp.o
+
+.PHONY : thread.o
+
+# target to build an object file
+thread.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/thread.cpp.o
+.PHONY : thread.cpp.o
+
+thread.i: thread.cpp.i
+
+.PHONY : thread.i
+
+# target to preprocess a source file
+thread.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/thread.cpp.i
+.PHONY : thread.cpp.i
+
+thread.s: thread.cpp.s
+
+.PHONY : thread.s
+
+# target to generate assembly for a file
+thread.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_ex2.dir/build.make CMakeFiles/os_ex2.dir/thread.cpp.s
+.PHONY : thread.cpp.s
 
 # Help Target
 help:
@@ -179,9 +206,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... os_ex2"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... demo_jmp.o"
+	@echo "... demo_jmp.i"
+	@echo "... demo_jmp.s"
+	@echo "... thread.o"
+	@echo "... thread.i"
+	@echo "... thread.s"
 .PHONY : help
 
 
