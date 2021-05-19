@@ -17,8 +17,7 @@ typedef unsigned long address_t;
 
 /* A translation is required when using an address of a variable.
    Use this as a black box in your code. */
-address_t translate_address(address_t addr)
-{
+address_t translate_address(address_t addr) {
     address_t ret;
     asm volatile("xor    %%fs:0x30,%0\n"
                  "rol    $0x11,%0\n"
@@ -27,21 +26,21 @@ address_t translate_address(address_t addr)
     return ret;
 }
 
-class thread
-{
+class thread {
 private:
     int id;
+
     void (*f)(void);
+
     bool mutex;
     int state;
     sigjmp_buf env;
     char *stack = new char[STACK_SIZE];
 
-    void setup_env()
-    {
+    void setup_env() {
         address_t sp, pc;
-        sp = (address_t)stack + STACK_SIZE - sizeof(address_t);
-        pc = (address_t)f;
+        sp = (address_t) stack + STACK_SIZE - sizeof(address_t);
+        pc = (address_t) f;
         sigsetjmp(env, 1);
         (env->__jmpbuf)[JB_SP] = translate_address(sp);
         (env->__jmpbuf)[JB_PC] = translate_address(pc);
@@ -51,20 +50,29 @@ private:
 
 public:
 
-    thread(void (*f)(void), int id)
-    {
+    thread(void (*f)(void), int id) {
         this->f = f;
         this->id = id;
     }
 
-    void get_env()
-    {
-//        return ;
-    }
+    __jmp_buf_tag *get_env();
 
-    void run_thread(thread cur_thread)
-    {
-//        int ret_val = sigsetjmp(env[currentThread],1);
+    void switch_threads(thread cur_thread);
 
-    }
+    int get_id();
+
 };
+
+__jmp_buf_tag *thread::get_env() {
+    return env;
+}
+
+void thread::switch_threads(thread cur_thread) {
+    int ret_val = sigsetjmp(cur_thread.get_env(), 1); //todo check ret_val if relevant
+    siglongjmp(env, 1);
+}
+
+int thread::get_id() {
+    return id;
+}
+
