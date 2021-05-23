@@ -77,9 +77,22 @@ include CMakeFiles/os_ex2.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/os_ex2.dir/flags.make
 
+CMakeFiles/os_ex2.dir/main.cpp.o: CMakeFiles/os_ex2.dir/flags.make
+CMakeFiles/os_ex2.dir/main.cpp.o: ../main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/os_ex2.dir/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/os_ex2.dir/main.cpp.o -c /home/nadav/CLionProjects/os_ex2/main.cpp
+
+CMakeFiles/os_ex2.dir/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/os_ex2.dir/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nadav/CLionProjects/os_ex2/main.cpp > CMakeFiles/os_ex2.dir/main.cpp.i
+
+CMakeFiles/os_ex2.dir/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/os_ex2.dir/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nadav/CLionProjects/os_ex2/main.cpp -o CMakeFiles/os_ex2.dir/main.cpp.s
+
 CMakeFiles/os_ex2.dir/uthreads.cpp.o: CMakeFiles/os_ex2.dir/flags.make
 CMakeFiles/os_ex2.dir/uthreads.cpp.o: ../uthreads.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/os_ex2.dir/uthreads.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/os_ex2.dir/uthreads.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/os_ex2.dir/uthreads.cpp.o -c /home/nadav/CLionProjects/os_ex2/uthreads.cpp
 
 CMakeFiles/os_ex2.dir/uthreads.cpp.i: cmake_force
@@ -92,7 +105,7 @@ CMakeFiles/os_ex2.dir/uthreads.cpp.s: cmake_force
 
 CMakeFiles/os_ex2.dir/thread.cpp.o: CMakeFiles/os_ex2.dir/flags.make
 CMakeFiles/os_ex2.dir/thread.cpp.o: ../thread.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/os_ex2.dir/thread.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/os_ex2.dir/thread.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/os_ex2.dir/thread.cpp.o -c /home/nadav/CLionProjects/os_ex2/thread.cpp
 
 CMakeFiles/os_ex2.dir/thread.cpp.i: cmake_force
@@ -103,19 +116,36 @@ CMakeFiles/os_ex2.dir/thread.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/os_ex2.dir/thread.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nadav/CLionProjects/os_ex2/thread.cpp -o CMakeFiles/os_ex2.dir/thread.cpp.s
 
+CMakeFiles/os_ex2.dir/mutex.cpp.o: CMakeFiles/os_ex2.dir/flags.make
+CMakeFiles/os_ex2.dir/mutex.cpp.o: ../mutex.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/os_ex2.dir/mutex.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/os_ex2.dir/mutex.cpp.o -c /home/nadav/CLionProjects/os_ex2/mutex.cpp
+
+CMakeFiles/os_ex2.dir/mutex.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/os_ex2.dir/mutex.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nadav/CLionProjects/os_ex2/mutex.cpp > CMakeFiles/os_ex2.dir/mutex.cpp.i
+
+CMakeFiles/os_ex2.dir/mutex.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/os_ex2.dir/mutex.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nadav/CLionProjects/os_ex2/mutex.cpp -o CMakeFiles/os_ex2.dir/mutex.cpp.s
+
 # Object files for target os_ex2
 os_ex2_OBJECTS = \
+"CMakeFiles/os_ex2.dir/main.cpp.o" \
 "CMakeFiles/os_ex2.dir/uthreads.cpp.o" \
-"CMakeFiles/os_ex2.dir/thread.cpp.o"
+"CMakeFiles/os_ex2.dir/thread.cpp.o" \
+"CMakeFiles/os_ex2.dir/mutex.cpp.o"
 
 # External object files for target os_ex2
 os_ex2_EXTERNAL_OBJECTS =
 
+os_ex2: CMakeFiles/os_ex2.dir/main.cpp.o
 os_ex2: CMakeFiles/os_ex2.dir/uthreads.cpp.o
 os_ex2: CMakeFiles/os_ex2.dir/thread.cpp.o
+os_ex2: CMakeFiles/os_ex2.dir/mutex.cpp.o
 os_ex2: CMakeFiles/os_ex2.dir/build.make
 os_ex2: CMakeFiles/os_ex2.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable os_ex2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable os_ex2"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/os_ex2.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

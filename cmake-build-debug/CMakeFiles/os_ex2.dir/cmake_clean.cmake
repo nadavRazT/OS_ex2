@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/os_ex2.dir/main.cpp.o"
+  "CMakeFiles/os_ex2.dir/mutex.cpp.o"
   "CMakeFiles/os_ex2.dir/thread.cpp.o"
   "CMakeFiles/os_ex2.dir/uthreads.cpp.o"
   "os_ex2"

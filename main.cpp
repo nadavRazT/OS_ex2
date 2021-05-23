@@ -1,7 +1,5 @@
 #include <iostream>
-#include "thread.h"
 #include "uthreads.h"
-#include "uthreads.cpp"
 
 void f(void)
 {
@@ -11,7 +9,6 @@ void f(void)
         printf("in f (%d)\n",i);
         if (i % 3 == 0) {
             printf("f: switching\n");
-            switchThreads();
         }
     }
 }
@@ -24,15 +21,15 @@ void g(void)
         printf("in g (%d)\n",i);
         if (i % 5 == 0) {
             printf("g: switching\n");
-            switch_threads();
         }
     }
 }
 
 int main() {
-    thread *t1 = new thread(f, 1);
-    thread *t2 = new thread(g, 2)
-    std::cout << "Hello, World!" << std::endl;
+    uthread_init(1);
+    uthread_spawn(f);
+    uthread_spawn(g);
+    uthread_terminate(0);
     return 0;
 }
 

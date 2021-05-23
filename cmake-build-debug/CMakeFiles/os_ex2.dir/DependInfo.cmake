@@ -4,6 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/nadav/CLionProjects/os_ex2/main.cpp" "/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles/os_ex2.dir/main.cpp.o"
+  "/home/nadav/CLionProjects/os_ex2/mutex.cpp" "/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles/os_ex2.dir/mutex.cpp.o"
   "/home/nadav/CLionProjects/os_ex2/thread.cpp" "/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles/os_ex2.dir/thread.cpp.o"
   "/home/nadav/CLionProjects/os_ex2/uthreads.cpp" "/home/nadav/CLionProjects/os_ex2/cmake-build-debug/CMakeFiles/os_ex2.dir/uthreads.cpp.o"
   )

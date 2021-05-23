@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/nadav/CLionProjects/os_ex2/thread.cpp
-setjmp.h
+/home/nadav/CLionProjects/os_ex2/main.cpp
+iostream
 -
-signal.h
--
-unistd.h
--
+uthreads.h
+/home/nadav/CLionProjects/os_ex2/uthreads.h
+
+/home/nadav/CLionProjects/os_ex2/uthreads.h
 

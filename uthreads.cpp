@@ -1,26 +1,55 @@
 #include "uthreads.h"
-#include "thread.cpp"
+#include "thread.h"
 #include <list>
+#include "mutex.h"
 #include <signal.h>
 #include <sys/time.h>
 #include <iostream>
 
+#define THREAD_LIBRARY_ERROR "thread library error: "
 using namespace std;
 
 int i = 0;
 list<thread> readyList;
 list<thread> blockedList;
-thread runningThread = new thread();
+mutex *mut = nullptr;
+thread *runningThread = nullptr;
 int curr_thread_num = 1;
-int total_num_quantum = 0;
+int total_num_quantum = 1;
+
+thread &real_pop_front(list<thread> &l) {
+    thread &th = l.front();
+    l.remove(l.front());
+    return th;
+}
+
+
+void switch_threads(thread &th) {
+    int ret_val = sigsetjmp(runningThread->get_env(), 1); //todo check ret_val if relevant
+    siglongjmp(th.get_env(), 1);
+    runningThread = &th;
+}
+
 
 void on_click(int sig) {
     total_num_quantum += 1;
-    runningThread.increment_num_quantum();
-    readyList.push_back(runningThread);
-    runningThread = readyList.pop_front();
+
+    if (runningThread == nullptr) {
+        if (readyList.empty()) {
+            return;
+        }
+        *runningThread = real_pop_front(readyList);
+        return;
+    } else {
+        readyList.push_back(*runningThread);
+        runningThread = &real_pop_front(readyList);
+        switch_threads(*runningThread);
+        runningThread->increment_num_quantum();
+
+    }
 
 }
+
 
 void set_timer(int quantum_usecs) {
     // set timer sigaction
@@ -31,12 +60,12 @@ void set_timer(int quantum_usecs) {
         cerr << ("sigaction error.") << endl;
     }
     // Configure the timer to expire after 1 sec... */
-    timer.it_value.tv_sec = 3;        // first time interval, seconds part
+    timer.it_value.tv_sec = 0;        // first time interval, seconds part
     timer.it_value.tv_usec = quantum_usecs;        // first time interval, microseconds part
 
 
     // configure the timer to expire every 3 sec after that.
-    timer.it_interval.tv_sec = 3;    // following time intervals, seconds part
+    timer.it_interval.tv_sec = 0;    // following time intervals, seconds part
     timer.it_interval.tv_usec = quantum_usecs;    // following time intervals, microseconds part
 
     // Start a virtual timer. It counts down whenever this process is executing.
@@ -47,10 +76,22 @@ void set_timer(int quantum_usecs) {
 }
 
 
-void switch_threads(thread &th) {
-    int ret_val = sigsetjmp(runningThread.get_env(), 1); //todo check ret_val if relevant
-    siglongjmp(th.get_env(), 1);
-    runningThread = th;
+thread *find_thread_by_id(int tid) {
+
+    for (auto &th : readyList) {
+        if (th.get_id() == tid) {
+            return &th;
+        }
+    }
+    for (auto &th : blockedList) {
+        if (th.get_id() == tid) {
+            return &th;
+        }
+    }
+    if (runningThread->get_id() == tid) {
+        return runningThread;
+    }
+    return nullptr;
 }
 
 
@@ -63,14 +104,21 @@ void switch_threads(thread &th) {
  * Return value: On success, return 0. On failure, return -1.
 */
 int uthread_init(int quantum_usecs) {
-    if (quantum_usecs <= 0) return -1;
+    if (quantum_usecs <= 0) {
+        cerr << THREAD_LIBRARY_ERROR << "invalid quantum usecs value" << endl;
+        return -1;
+    }
+    uthread_spawn(nullptr);
+    runningThread = &real_pop_front(readyList);
+    mut = mut->get_instance();
     set_timer(quantum_usecs);
+
     return 0;
 }
 
 
 int find_next_id() {
-    for (int j = 1; j < MAX_THREAD_NUM; j++) {
+    for (int j = 0; j < MAX_THREAD_NUM; j++) {
         bool used = false;
         for (thread th : readyList) {
             if (th.get_id() == j) {
@@ -82,7 +130,7 @@ int find_next_id() {
                 used = true;
             }
         }
-        if (runningThread.get_id() == j) {
+        if (runningThread && runningThread->get_id() == j) {
             used = true;
         }
         if (!used) {
@@ -104,76 +152,58 @@ int find_next_id() {
  * On failure, return -1.
 */
 int uthread_spawn(void (*f)(void)) {
+
     if (curr_thread_num >= MAX_THREAD_NUM) return -1;
     thread *toAdd = new thread(f, find_next_id());
     readyList.push_back(*toAdd);
-    return 0;
-}
-
-
-thread find_thread_by_id(int tid) {
-
-    for (auto th : readyList) {
-        if (th.get_id() == tid) {
-            return th;
-        }
-    }
-    for (auto th : blockedList) {
-        if (th.get_id() == tid) {
-            return th;
-        }
-    }
-    if (runningThread.get_id() == tid) {
-        return runningThread;
-    }
-    return thread();
+    return toAdd->get_id();
 }
 
 
 int find_and_delete(int tid) {
     bool flag = false;
-    thread th_to_del;
-    for (auto th : readyList) {
+    thread *th_to_del;
+    for (auto &th : readyList) {
         if (th.get_id() == tid) {
             flag = true;
-            th_to_del = th;
+            th_to_del = &th;
         }
     }
 
     if (flag) {
-        readyList.remove(th_to_del);
-        th_to_del.terminate();
+        readyList.remove(*th_to_del);
+        th_to_del->terminate();
         delete &th_to_del;
         return 1;
     }
-    for (auto th : blockedList) {
+    for (auto &th : blockedList) {
         if (th.get_id() == tid) {
             flag = true;
-            th_to_del = th;
+            th_to_del = &th;
         }
     }
     if (flag) {
-        readyList.remove(th_to_del);
-        th_to_del.terminate();
+        readyList.remove(*th_to_del);
+        th_to_del->terminate();
         delete &th_to_del;
         return 1;
 
     }
-    if (runningThread.get_id() == tid) {
-        runningThread.terminate();
+    if (runningThread->get_id() == tid) {
+        runningThread->terminate();
     }
     return -1;
 }
 
 
 void terminate_all() {
-    for (auto th: readyList) {
+    for (auto &th: readyList) {
         th.terminate();
     }
-    for (auto th:blockedList) {
+    for (auto &th:blockedList) {
         th.terminate();
     }
-    runningThread.terminate();
+    runningThread->terminate();
 }
 
 
@@ -189,11 +219,11 @@ void terminate_all() {
  * thread is terminated, the function does not return.
 */
 int uthread_terminate(int tid) {
-    if (tid == 0 || tid == runningThread.get_id()) {
+    if (tid == 0 || tid == runningThread->get_id()) {
         terminate_all();
         exit(0); //todo free memory
     }
-
+    //todo reset timer
     int ret = find_and_delete(tid);
     if (ret == -1) {
         return -1;
@@ -212,17 +242,23 @@ int uthread_terminate(int tid) {
  * Return value: On success, return 0. On failure, return -1.
 */
 int uthread_block(int tid) {
-    if (tid == 0 || find_thread_by_id(tid).get_id() == -1) {
+    if (tid == 0) {
+        cerr << THREAD_LIBRARY_ERROR << "can't block main thread" << endl;
         return -1; //todo check error or failure
+    } else if (find_thread_by_id(tid) == nullptr) {
+        cerr << THREAD_LIBRARY_ERROR << "thread not found" << endl;
+        return -1;
     }
-    if (tid == runningThread.get_id()) {
+    if (tid == runningThread->get_id()) {
         if (readyList.empty()) {
             exit(0); //todo free memory
         }
-        switch_threads(readyList.pop_front());
-        blockedList.push_back(runningThread);
+        total_num_quantum++;
+        switch_threads(real_pop_front(readyList));
+        blockedList.push_back(*runningThread);
+
     }
-    for (auto th: readyList) {
+    for (auto &th: readyList) {
         if (th.get_id() == tid) {
             readyList.remove(th);
             blockedList.push_back(th);
@@ -241,11 +277,10 @@ int uthread_block(int tid) {
  * Return value: On success, return 0. On failure, return -1.
 */
 int uthread_resume(int tid) {
-    if(find_thread_by_id(tid).get_id() == -1)
-    {
+    if (find_thread_by_id(tid) == nullptr) {
         return -1;
     }
-    for (auto th: blockedList) {
+    for (auto &th: blockedList) {
         if (th.get_id() == tid) {
             blockedList.remove(th);
             readyList.push_back(th);
@@ -266,7 +301,17 @@ int uthread_resume(int tid) {
  * Return value: On success, return 0. On failure, return -1.
 */
 int uthread_mutex_lock() {
-    return 0;
+    if (!(mut->is_acquired())) {
+        mut->acquire(*runningThread);
+        return 0;
+    }
+    if (mut->get_thread() == runningThread) //todo possible voodo
+    {
+        return -1; //todo possible error
+    }
+    runningThread->wait_for_mutex();
+    uthread_block(runningThread->get_id());
+    return -1;
 }
 
 
@@ -278,6 +323,20 @@ int uthread_mutex_lock() {
  * Return value: On success, return 0. On failure, return -1.
 */
 int uthread_mutex_unlock() {
+    if (!mut->is_acquired()) {
+        return -1; // todo raise error
+    }
+    mut->release_mutex();
+    thread *to_change = nullptr;
+    for (auto &th : blockedList) {
+        if (th.is_waiting_for_mutex()) {
+            to_change = &th;
+            break;
+        }
+    }
+    if (to_change != nullptr) {
+        uthread_resume(to_change->get_id());
+    }
     return 0;
 }
 
@@ -287,7 +346,7 @@ int uthread_mutex_unlock() {
  * Return value: The ID of the calling thread.
 */
 int uthread_get_tid() {
-    return runningThread.get_id();
+    return runningThread->get_id();
 }
 
 
@@ -315,7 +374,10 @@ int uthread_get_total_quantums() {
  * 			     On failure, return -1.
 */
 int uthread_get_quantums(int tid) {
-    return find_thread_by_id(tid).get_num_quantum();
+    if (find_thread_by_id(tid) == nullptr) {
+        return 0; //todo add error
+    }
+    return find_thread_by_id(tid)->get_num_quantum();
 }
 
 //int main()

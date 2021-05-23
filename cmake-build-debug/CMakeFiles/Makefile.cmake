@@ -8,24 +8,46 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "../CMakeLists.txt"
+  "../CMakeLists.txt.in"
   "CMakeFiles/3.17.5/CMakeCCompiler.cmake"
   "CMakeFiles/3.17.5/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.17.5/CMakeSystem.cmake"
+  "googletest-src/CMakeLists.txt"
+  "googletest-src/googlemock/CMakeLists.txt"
+  "googletest-src/googlemock/cmake/gmock.pc.in"
+  "googletest-src/googlemock/cmake/gmock_main.pc.in"
+  "googletest-src/googletest/CMakeLists.txt"
+  "googletest-src/googletest/cmake/Config.cmake.in"
+  "googletest-src/googletest/cmake/gtest.pc.in"
+  "googletest-src/googletest/cmake/gtest_main.pc.in"
+  "googletest-src/googletest/cmake/internal_utils.cmake"
+  "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCInformation.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCXXInformation.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCommonLanguageInclude.cmake"
+  "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CMakeDependentOption.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CMakeExtraGeneratorDetermineCompilerMacrosAndIncludeDirs.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CMakeFindCodeBlocks.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CMakeGenericSystem.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CMakeInitializeConfigs.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CMakeLanguageInformation.cmake"
+  "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CMakePackageConfigHelpers.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CMakeSystemSpecificInformation.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CMakeSystemSpecificInitialize.cmake"
+  "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CheckCSourceCompiles.cmake"
+  "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CheckIncludeFile.cmake"
+  "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/CheckLibraryExists.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/Compiler/GNU-C.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/Compiler/GNU-CXX.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/Compiler/GNU.cmake"
+  "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/FindPackageHandleStandardArgs.cmake"
+  "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/FindPackageMessage.cmake"
+  "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/FindPython.cmake"
+  "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/FindPython/Support.cmake"
+  "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/FindThreads.cmake"
+  "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/GNUInstallDirs.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/Internal/CMakeCheckCompilerFlag.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/Platform/Linux-GNU-C.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/Platform/Linux-GNU-CXX.cmake"
@@ -33,6 +55,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/Platform/Linux.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/Platform/UnixPaths.cmake"
   "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/ProcessorCount.cmake"
+  "/home/nadav/Documents/clion-2020.3.2/bin/cmake/linux/share/cmake-3.17/Modules/WriteBasicConfigVersionFile.cmake"
   )
 
 # The corresponding makefile is:
@@ -43,10 +66,18 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
+  "googletest-download/CMakeLists.txt"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
+  "googletest-build/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "googletest-build/googlemock/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "googletest-build/googletest/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/os_ex2.dir/DependInfo.cmake"
+  "CMakeFiles/theTests.dir/DependInfo.cmake"
+  "googletest-build/googlemock/CMakeFiles/gmock_main.dir/DependInfo.cmake"
+  "googletest-build/googlemock/CMakeFiles/gmock.dir/DependInfo.cmake"
+  "googletest-build/googletest/CMakeFiles/gtest_main.dir/DependInfo.cmake"
+  "googletest-build/googletest/CMakeFiles/gtest.dir/DependInfo.cmake"
   )
