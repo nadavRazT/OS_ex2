@@ -87,6 +87,7 @@ void threadQuantumSleep(int threadQuants)
      */
     while (uthread_get_quantums(myId) != end)
     {
+//        std::cout<< uthread_get_quantums(myId)<<std::endl;
     }
 }
 
@@ -184,6 +185,7 @@ TEST(Test2, ThreadSchedulingWithTermination)
     static bool reached_f = false;
 
     auto f = [](){
+        printf("HELlo\n");
         EXPECT_TRUE ( reached_middle );
         reached_f = true;
         EXPECT_EQ ( uthread_terminate(1), 0);
@@ -192,12 +194,14 @@ TEST(Test2, ThreadSchedulingWithTermination)
 
     auto g = [](){
         EXPECT_EQ ( uthread_resume(1), 0);
+        printf("HAllo\n");
         EXPECT_EQ ( uthread_terminate(2), 0);
     };
 
 
     EXPECT_EQ ( uthread_spawn(f), 1);
     EXPECT_EQ ( uthread_spawn(g), 2);
+    printf("BLOCKING !\n");
     EXPECT_EQ ( uthread_block(1), 0);
 
     threadQuantumSleep(1);
@@ -267,6 +271,7 @@ TEST(Test3, ThreadExecutionOrder)
         quantumsToTids[uthread_get_total_quantums()] = 0;
         // during this call, the library should reschedule to thread 2(if i>=2) or thread 1(if i==1)
         threadQuantumSleep(1);
+        std::cout<<"bulbul"<<std::endl;
     }
 
     // we had a total of 13 quantums(1 at beginning, 4 during each iteration of the main loop, 4*2 for the iterations
