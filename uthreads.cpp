@@ -20,16 +20,11 @@ thread *thread_array[MAX_THREAD_NUM];
 sigset_t set;
 struct sigaction timer_sa = {0};
 struct itimerval timer;
+thread* mutexHolder = nullptr;
 
 
 void block_signal() {
     sigprocmask(SIG_BLOCK, &set, NULL);
-//    cout<<"BLOCKED" <<endl;
-//    if ( == -1) {
-//        //todo print error
-//        exit(0);
-//    };
-
 }
 
 void unblock_signal() {
@@ -62,18 +57,21 @@ void switch_threads() {
     thread *th = real_pop_front(readyList);
     thread *cur = runningThread;
     runningThread = th;
+    runningThread->increment_num_quantum();
+    total_num_quantum++;
     reset_timer();
     unblock_signal();
     int ret_val = sigsetjmp(cur->get_env(), 1);
-    runningThread->increment_num_quantum();
-    total_num_quantum++;
     if (ret_val != 0) {
         block_signal();
         return;
     }//todo check ret_val if relevant
-    cout<<"jumping to: "<<th->get_id()<<endl;
-    if (runningThread->get_id() == 0) {
-        int b = 0;
+//    cout<<"jumping to: "<<th->get_id()<<endl;//<< " has "<< th->get_num_quantum() <<" runs" <<endl;
+//   cout<< "total quantum: "<< uthread_get_total_quantums() << endl;
+//    cout<< "num of ready: "<< readyList.size()<<endl;
+    if(th->get_id() == 0)
+    {
+        int b= 0;
     }
     siglongjmp(th->get_env(), 0);
 }
@@ -256,7 +254,7 @@ int find_and_delete(int tid) {
         }
     }
     if (flag) {
-        readyList.remove(th_to_del);
+        blockedList.remove(th_to_del);
         thread_array[th_to_del->get_id()] = nullptr;
         th_to_del->terminate();
         curr_thread_num--;
@@ -276,11 +274,13 @@ int find_and_delete(int tid) {
 
 void terminate_all() {
     for (auto &th: readyList) {
+        std::cout << th->get_id() << std::endl;
         thread_array[th->get_id()] = nullptr;
         th->terminate();
         curr_thread_num--;
     }
     for (auto &th:blockedList) {
+        std::cout << th->get_id() << std::endl;
         thread_array[th->get_id()] = nullptr;
         th->terminate();
         curr_thread_num--;
@@ -309,20 +309,44 @@ int uthread_terminate(int tid) {
         terminate_all();
         exit(0);
     }
+    if (readyList.empty() && runningThread->get_id() != 0) {
+        terminate_all();
+        exit(0); //todo free memory
+    }
     int ret = find_and_delete(tid);
+
+    if(tid == runningThread->get_id())
+    {
+        uthread_mutex_unlock();
+        runningThread = real_pop_front(readyList);
+        runningThread->increment_num_quantum();
+        total_num_quantum++;
+        siglongjmp(runningThread->get_env(), 0);
+
+    }
+    if(mutexHolder != nullptr && mutexHolder->get_id() == tid){
+        mutexHolder = nullptr;
+        thread *to_change = nullptr;
+        for (auto &th : blockedList) {
+            if (th->is_waiting_for_mutex()) {
+                to_change = th;
+                break;
+            }
+        }
+        if (to_change != nullptr) {
+            to_change->got_mutex();
+            uthread_resume(to_change->get_id());
+        }
+    }
     if (ret == -1) {
         cerr << THREAD_LIBRARY_ERROR << "couldn't find the requested thread" << endl;
         unblock_signal();
         return -1;
     }
-    if (readyList.empty()) {
-        terminate_all();
-        exit(0); //todo free memory
-    }
+
     //todo reset timer
     unblock_signal();
-    runningThread = real_pop_front(readyList);
-    siglongjmp(runningThread->get_env(), 0);
+
 //    switch_threads();
 }
 
@@ -354,7 +378,7 @@ int uthread_block(int tid) {
         blockedList.push_back(runningThread);
         unblock_signal();
         switch_threads();
-
+        return 0;
     }
     for (auto &th: readyList) {
         if (th->get_id() == tid) {
@@ -376,7 +400,6 @@ int uthread_block(int tid) {
  * Return value: On success, return 0. On failure, return -1.
 */
 int uthread_resume(int tid) {
-    cout<<"resuming "<<tid<<endl;
     block_signal();
     if (find_thread_by_id(tid) == nullptr) {
         cerr << THREAD_LIBRARY_ERROR << "couldn't find the requested thread" << endl;
@@ -405,13 +428,14 @@ int uthread_resume(int tid) {
  * Return value: On success, return 0. On failure, return -1.
 */
 int uthread_mutex_lock() {
+    start:
     block_signal();
-    if (!(mut->is_acquired())) {
-        mut->acquire(*runningThread);
+    if (mutexHolder == nullptr) {
+        mutexHolder = runningThread;
         unblock_signal();
         return 0;
     }
-    if (mut->get_thread() == runningThread) //todo possible voodo
+    if (mutexHolder->get_id() == runningThread->get_id()) //todo possible voodo
     {
         unblock_signal();
         return -1; //todo possible error
@@ -419,7 +443,7 @@ int uthread_mutex_lock() {
     runningThread->wait_for_mutex();
     uthread_block(runningThread->get_id());
     unblock_signal();
-    return -1;
+    goto start;
 }
 
 
@@ -432,10 +456,14 @@ int uthread_mutex_lock() {
 */
 int uthread_mutex_unlock() {
     block_signal();
-    if (!mut->is_acquired()) {
+    if (mutexHolder == nullptr) {
         return -1; // todo raise error
     }
-    mut->release_mutex();
+    if(mutexHolder->get_id() != runningThread->get_id())
+    {
+        return -1; //TODO: RAISE ERROR
+    }
+    mutexHolder = nullptr;
     thread *to_change = nullptr;
     for (auto &th : blockedList) {
         if (th->is_waiting_for_mutex()) {
@@ -444,6 +472,7 @@ int uthread_mutex_unlock() {
         }
     }
     if (to_change != nullptr) {
+        to_change->got_mutex();
         uthread_resume(to_change->get_id());
     }
     unblock_signal();

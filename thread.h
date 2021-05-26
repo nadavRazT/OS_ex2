@@ -65,6 +65,7 @@ public:
             return;
         }
         delete stack;
+        stack = nullptr;
     }
 
     void wait_for_mutex()
