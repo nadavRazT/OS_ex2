@@ -32,7 +32,7 @@ private:
 
 
     bool waiting_for_mutex = false;
-    int num_quantum = 1;
+    int num_quantum = 0;
     sigjmp_buf env;
     char *stack;
 
@@ -60,6 +60,10 @@ public:
     }
 
     void terminate() {
+        if(this->stack == nullptr)
+        {
+            return;
+        }
         delete stack;
     }
 
@@ -99,9 +103,7 @@ public:
     thread() {
         this->f = nullptr;
         this->id = 0;
-        this->stack = new char[STACK_SIZE];
         sigsetjmp(this->env, 1);
-
     }
 
     bool operator==(const thread& th)
